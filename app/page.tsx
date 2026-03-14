@@ -6,12 +6,28 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
+type Tracking = {
+  number: string;
+  status: string;
+  eta: string;
+};
+
+type FormState = {
+  name: string;
+  email: string;
+  address: string;
+  gymName: string;
+  gymAddress: string;
+  membership: string;
+  notes: string;
+};
+
 export default function GymCancelStartupSite() {
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [tracking, setTracking] = useState(null);
+  const [tracking, setTracking] = useState<Tracking | null>(null);
 
-  const [form, setForm] = useState({
+  const [form, setForm] = useState<FormState>({
     name: "",
     email: "",
     address: "",
@@ -21,11 +37,11 @@ export default function GymCancelStartupSite() {
     notes: "",
   });
 
-  function updateField(field, value) {
+  function updateField(field: keyof FormState, value: string) {
     setForm({ ...form, [field]: value });
   }
 
-  async function handleCheckout(e) {
+  async function handleCheckout(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
 
